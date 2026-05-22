@@ -35,7 +35,7 @@ See also: [Discovering and installing plugins](https://code.claude.com/docs/en/d
 
 ## What it does
 
-**This is Zyte's official [Claude Code](https://code.claude.com) plugin that builds a production-ready [Scrapy](https://scrapy.org) spider from a single prompt. Tell it a URL and what you want to extract. The plugin explores the site, discovers fields, and presents a schema for your approval. After you confirm, it generates [web-poet](https://web-poet.readthedocs.io) page objects, creates a Scrapy project with all dependencies configured, wires up the spider, and runs a smoke test to confirm extraction is working before handing the project back to you.
+This is Zyte's official [Claude Code](https://code.claude.com) plugin that builds a production-ready [Scrapy](https://scrapy.org) spider from a single prompt. Tell it a URL and what you want to extract. The plugin explores the site, discovers fields, and presents a schema for your approval. After you confirm, it generates [web-poet](https://web-poet.readthedocs.io) page objects, creates a Scrapy project with all dependencies configured, wires up the spider, and runs a smoke test to confirm extraction is working before handing the project back to you.
 
 Optionally, use `/scrape-scrapy-cloud` to deploy directly to [Scrapy Cloud](https://www.zyte.com/scrapy-cloud/) for scheduled runs, job history, and monitoring. A [free tier is available](https://docs.zyte.com/scrapy-cloud/pricing.md).
 
