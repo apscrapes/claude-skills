@@ -35,15 +35,27 @@ See also: [Discovering and installing plugins](https://code.claude.com/docs/en/d
 
 ## What it does
 
-This is Zyte's official [Claude Code](https://code.claude.com) plugin that builds a production-ready [Scrapy](https://scrapy.org) spider from a single prompt. Tell it a URL and what you want to extract. The plugin explores the site, discovers fields, and presents a schema for your approval. After you confirm, it generates [web-poet](https://web-poet.readthedocs.io) page objects, creates a Scrapy project with all dependencies configured, wires up the spider, and runs a smoke test to confirm extraction is working before handing the project back to you.
+This is Zyte's official [Claude Code](https://code.claude.com) plugin that generates production-ready [Scrapy](https://scrapy.org) spiders with [web-poet](https://web-poet.readthedocs.io) page objects from a plain-English prompt. Give it a URL and describe what you want to extract. It handles site exploration, schema discovery, code generation, and smoke testing: no boilerplate, no manual selector hunting.
+
+The plugin explores the target site, discovers available fields, and presents a schema for your approval before generating a single line of code. After you confirm the schema, it creates a Scrapy project with all dependencies configured, generates web-poet page objects and test fixtures, wires up the spider, and runs a smoke test to verify that extraction is working before handing the project back to you.
 
 Optionally, use `/scrape-scrapy-cloud` to deploy directly to [Scrapy Cloud](https://www.zyte.com/scrapy-cloud/) for scheduled runs, job history, and monitoring. A [free tier is available](https://docs.zyte.com/scrapy-cloud/pricing.md).
 
 ---
 
-## How it works
+## Use cases
 
-The `/scrape` skill orchestrates five stages:
+The `/scrape` skill works on any website with repeating structured content: detail pages linked from a listing or category page. Examples from the skill:
+
+- Product catalogs
+- Job listings
+- Recipes
+
+---
+
+## How does it work?
+
+The `/scrape` skill orchestrates five stages automatically:
 
 ```
 1. Decide which fields to extract   →  /scrape-define
@@ -111,13 +123,13 @@ Project dependencies (scrapy, scrapy-poet, scrapy-zyte-api, web-poet, extruct, p
 
 ## Quickstart
 
-The scraping skills are designed to pick up any scraping prompt automatically. For example:
+Any scraping prompt triggers the skill automatically. For example:
 
 ```
-Scrape https://books.toscrape.com/
+/scrape https://books.toscrape.com/
 ```
 
-The plugin will guide you through schema approval interactively, then generate a complete, tested Scrapy project.
+The plugin walks you through schema approval interactively, then generates a complete, tested Scrapy project.
 
 ---
 
@@ -153,6 +165,32 @@ We automatically evaluate skills and track both wall time and cost. We measure a
 If you find any issue — such as prompts that did not work as expected, or that caused excessive wall time or cost — please [open a GitHub issue](https://github.com/zyte-ai/claude-skills/issues).
 
 Provide as much detail as possible to help us reproduce the issue. You are welcome to anonymize target websites or other data.
+
+---
+
+## Frequently asked questions
+
+### Is a Zyte account required?
+
+No. The generated spider is a standard Scrapy project that runs locally with `uv`. A Zyte account is required only if you want to deploy to [Scrapy Cloud](https://www.zyte.com/scrapy-cloud/) or use [Zyte API](https://www.zyte.com/zyte-api/) to access sites that block standard scrapers. If you want to use Zyte API, you'll need an account to generate an API key.
+
+### Does it handle JavaScript-rendered pages?
+
+The generated project includes `scrapy-zyte-api` as a dependency. Enabling headless browser rendering requires a [Zyte API](https://www.zyte.com/zyte-api/) key. The `/scrape-zyte-login` skill guides you through setting up your credentials.
+
+### What Python libraries does the generated project use?
+
+The project template includes `scrapy`, `scrapy-poet`, `scrapy-zyte-api`, `web-poet`, `extruct`, `price-parser`, and `pytest`. All dependencies are installed automatically via `uv sync`.
+
+### Can the generated spider run without Claude Code?
+
+Yes. The plugin generates a standard Scrapy project. Run it directly with:
+
+```bash
+uv run scrapy crawl <spider_name>
+```
+
+You can extend, modify, and deploy it independently of Claude Code.
 
 ---
 
