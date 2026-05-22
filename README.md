@@ -126,7 +126,7 @@ Project dependencies (scrapy, scrapy-poet, scrapy-zyte-api, web-poet, extruct, p
 Any scraping prompt triggers the skill automatically. For example:
 
 ```
-/scrape https://books.toscrape.com/
+/scrape https://books.toscrape.com/ products
 ```
 
 The plugin walks you through schema approval interactively, then generates a complete, tested Scrapy project.
